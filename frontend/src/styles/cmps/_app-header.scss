@@ -1,0 +1,27 @@
+.header-main-content{
+    display: flex;
+    justify-content: space-between;
+}
+
+header{
+    background-color: $clr1;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.cart{
+    position: absolute;
+    right: 1rem;
+    top:rem(140px) ;
+    width: rem(200px);
+    height: fit-content;
+    background-color: $clr6;
+    border-radius: 1rem;
+    border: 1px solid rgb(184, 182, 182);
+    font-size: 1.2rem;
+    padding: 1rem;
+    z-index: 1;
+    li{
+        list-style: none;
+    }
+}

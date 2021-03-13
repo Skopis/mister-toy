@@ -1,0 +1,84 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+html {
+    font-family: Opensans;
+    line-height: 1.6;
+    color: $clr2;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: $clr2;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Opensans;
+    font-weight: 500;
+    color: $clr5;
+}
+
+h2 {
+    padding: rem(10px) 0 0 rem(10px);
+    font-family: GreatVibes, serif;
+    font-size: rem(50px);
+}
+h4{
+    text-align: right;
+}
+h5{
+    margin-bottom: 1rem;
+}
+
+p {
+    max-width: 48ch;
+    margin: 0 0 1rem;
+}
+
+img {
+    width: 100%;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    color: $clr5;
+    font-weight: 700; 
+}
+
+nav {
+    padding: 10px;
+}
+
+nav a {
+    font-weight: bold;
+    color: $clr3;
+}
+
+nav a.router-link-exact-active {
+    cursor:default;
+    text-decoration: none;
+    color:$clr2;
+}
+
+footer{
+    text-align: left;
+    height: 50px;
+    background-color: #a59494; 
+    h3{
+        color: $clr6; 
+    }
+}
+
+.main-content{
+    min-height: calc(100vh - 190px);
+}
