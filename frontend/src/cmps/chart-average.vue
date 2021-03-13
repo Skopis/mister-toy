@@ -59,8 +59,3 @@ export default {
   },
 };
 </script>
-<style>
-.chart {
-  width: 500px;
-}
-</style>

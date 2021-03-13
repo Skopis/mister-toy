@@ -1,15 +1,18 @@
 <template>
-    <div class="edit-toy-form">
+    <div class="toy-edit-form">
         <h3>{{title}}</h3>
         <el-form>
             <validation-provider rules="required" v-slot="{ errors }">
-                <el-input class="edit-toy-input" type="text" placeholder="Name" v-model="toyToEdit.name"/>
+                <el-input class="toy-edit-input" type="text" placeholder="Name" v-model="toyToEdit.name"/>
                 <span>{{ errors[0] }}</span>
             </validation-provider><br />
             <validation-provider rules="required" v-slot="{ errors }">
-                <el-input class="edit-toy-input" type="number" placeholder="Price" v-model.number="toyToEdit.price"/>
+                <el-input class="toy-edit-input" type="number" placeholder="Price" v-model.number="toyToEdit.price"/>
                 <span>{{ errors[0] }}</span>
             </validation-provider><br />
+                <div v-if="user.isAdmin">
+                    <input type="checkbox" v-model="toyToEdit.inStock" />In inStock
+                </div>
                 <input type="checkbox" v-model="toyToEdit.type" value="funny" /> Funny
                 <input type="checkbox" v-model="toyToEdit.type" value="scary" /> Scary
                 <input type="checkbox" v-model="toyToEdit.type" value="learning" /> Learning
@@ -29,7 +32,7 @@ extend('required', {
 });
 
 export default {
-    name: 'toy-add',
+    name: 'toy-edit',
     props:['toyToEdit'],
     methods:{
         saveToy() {
@@ -37,6 +40,9 @@ export default {
         }
     },
     computed:{
+        user() {
+            return this.$store.getters.user || false
+        },
         title(){
             return this.toyToEdit._id ? 'Edit a Toy' : 'Add a new Toy'
         }

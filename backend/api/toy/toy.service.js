@@ -84,7 +84,8 @@ async function add(toy) {
             price: toy.price,
             type: toy.type,
             createdAt: toy.createdAt,
-            inStock: toy.inStock
+            inStock: toy.inStock,
+            reviews: []
         }
         const collection = await dbService.getCollection('toy')
         await collection.insertOne(toyToAdd)

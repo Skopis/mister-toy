@@ -10,22 +10,22 @@
                     {{toy.name}} | ${{toy.price}} | In Stock: {{toy.inStock}} <br> Type: 
                         <p class="type-list"><span v-for="t in toy.type" :key="'A'+t">&#10240;{{t}}</span></p>
                     <div class="button-container">
-                        <button @click="removeToy(toy._id)">&#127367;</button>
-                        <router-link :to="'/toy/details/'+toy._id">ℹ️</router-link>
-                        <button @click="editToy(toy)">✎</button>
+                        <button @click="removeToy(toy._id)" v-if="user.isAdmin">&#127367;</button>
+                        <router-link :to="'/toy/details/'+toy._id"><img class="info-img" src="../assets/imgs/info.png" alt=""></router-link>
+                        <button @click="editToy(toy)" v-if="user.isAdmin">✎</button>
                         <button @click="addToCart(toy)">🛒</button>
                     </div>
                 </li>
             </ul>
         </div>
-        <toy-add :toyToEdit="toyToEdit" @saveToy="saveToy"/>
+        <toy-edit :toyToEdit="toyToEdit" @saveToy="saveToy"/>
     </div>
 </template>
 
 <script>
 import { showMsg } from '../services/eventBus.service.js'
 import userMsg from '../cmps/user-msg.vue'
-import toyAdd from '../cmps/toy-edit.vue'
+import toyEdit from '../cmps/toy-edit.vue'
 import { toyService } from '../services/toy.service.js'
 import toyFilter from '../cmps/toy-filter.vue'
 
@@ -39,6 +39,9 @@ export default {
         }
     },
     computed: {
+        user() {
+            return this.$store.getters.user || false
+        },
         toys() {
             return this.$store.getters.toys
         },
@@ -87,7 +90,7 @@ export default {
     },
     components:{
         toyFilter,
-        toyAdd,
+        toyEdit,
         userMsg
     }
 }

@@ -1,32 +1,35 @@
 <template>
     <div class="map main-content">
-    <h3>Our Branches</h3>
-  <div id="root">
-    <gmap-map
-      ref="mymap"
-      :center="startLocation"
-      :zoom="8"
-      style="width: 70%; height: 500px; margin: 1rem auto;"
-    >
-      <gmap-info-window
-        :options="infoOptions"
-        :position="infoPosition"
-        :opened="infoOpened"
-        @closeclick="infoOpened = false"
-      >
+      <h3>Our Branches</h3>
+      <div id="root">
+        <gmap-map ref="mymap"
+          :center="startLocation"
+          :zoom="8"
+          style="width: 70%; height: 500px; margin: 1rem auto;"
+        >
+        <gmap-info-window
+          :options="infoOptions"
+          :position="infoPosition"
+          :opened="infoOpened"
+          @closeclick="infoOpened = false"
+        >
         {{ infoContent }}
-      </gmap-info-window>
+        </gmap-info-window>
 
-      <gmap-marker
-        v-for="(item, key) in coordinates"
-        :key="key"
-        :position="getPosition(item)"
-        :clickable="true"
-        @click="toggleInfo(item, key)"
-      />
-    </gmap-map>
-  </div>
-  </div>
+        <gmap-marker v-for="(item, key) in coordinates"
+          :key="key"
+          :position="getPosition(item)"
+          :clickable="true"
+          @click="toggleInfo(item, key)"
+        />
+        </gmap-map>
+        <div class="branch-ntb">
+          <button >Thur Natan Branch</button>
+          <button>Ashdod Branch</button>
+          <button>Harashim Branch</button>
+        </div> 
+      </div>
+    </div>
 </template>
 
 <script>

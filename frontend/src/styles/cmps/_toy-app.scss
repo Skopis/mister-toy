@@ -42,26 +42,28 @@
     padding: rem(20px);
 }
 
-.button-container {
-    display: flex;
-    justify-content: space-evenly;
-}
 .button-container{
-    button{
+    display: flex;
+    justify-content: space-evenly;    
+    button, a, img{
         font-size: 20px;
+        line-height: 20px;
+        height: 20px;
+        width: 20px;
         cursor: pointer;
+        vertical-align: middle;
     }
 }
 
-.edit-toy-form > * {
+.toy-edit-form > * {
     margin-bottom: 0.5rem;
 }
-.edit-toy-input {
+.toy-edit-input {
     width: 40% !important;
     margin: 0 0.5rem 0.5rem 0;
 }
 
-.edit-toy-form {
+.toy-edit-form {
     background-color: #e0d5d5;
     max-width: 70%;
     margin: 0 auto;
