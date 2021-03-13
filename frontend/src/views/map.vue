@@ -23,11 +23,6 @@
           @click="toggleInfo(item, key)"
         />
         </gmap-map>
-        <div class="branch-ntb">
-          <button >Thur Natan Branch</button>
-          <button>Ashdod Branch</button>
-          <button>Harashim Branch</button>
-        </div> 
       </div>
     </div>
 </template>
