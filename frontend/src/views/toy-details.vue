@@ -11,13 +11,15 @@
         <ul class="review-card">
             <li v-for="(review,idx) in reviews" :key="idx" :v-if="reviews">
                 <p>By: {{review.byUser.fullname}}</p>
+                <!-- <p>{{review}}</p> -->
                 <p>Rating: {{showStars(review.starCount)}}</p>
                 <p>"{{review.txt}}"</p>
-                <button v-if="isLoggedinUserAdmin" @click="remove(idx)">✖️</button>
+                <button v-if="isLoggedinUserAdmin" @click="remove(idx, review._id)">✖️</button>
             </li>
         </ul>      
         </div>
-        <toy-review :toy="toy">Add a review</toy-review>
+        <toy-review :toy="toy" @addReview="addReview">Add a review</toy-review>
+        <chat :toy="toy">Start a chat</chat>
     </section>
 </template>
 
@@ -25,6 +27,8 @@
 import { toyService } from '../services/toy.service.js'
 import toyReview from '../cmps/toy-review.vue'
 import { reviewService } from '../services/review.service.js'
+import chat from '../cmps/chat.vue'
+
 const STAR = '⭐'
 export default {
     name: 'toy-details',
@@ -43,15 +47,19 @@ export default {
         }
     },
     methods:{
+        addReview(reviewToAdd){
+            console.log('reviewToAdd', reviewToAdd)
+            this.reviews.push(reviewToAdd)
+        },
         time(createdAt){
             return new Date(createdAt).toLocaleString()
         },
         showStars(numOfStars){
             return STAR.repeat(numOfStars) 
         },
-        remove(idx){
-            this.toy.reviews.splice(idx, 1)
-            toyService.save(this.toy)
+        remove(idx, reviewId){
+            this.reviews.splice(idx, 1)
+            reviewService.remove(reviewId)
         },
         async setReviews(toyId){
             this.reviews = await reviewService.query({toyId})
@@ -66,7 +74,8 @@ export default {
         this.setReviews(id)
     },
     components:{
-        toyReview
+        toyReview,
+        chat
     }
 }
 </script>

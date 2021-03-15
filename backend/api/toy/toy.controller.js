@@ -25,7 +25,6 @@ async function addToy(req, res) {
 }
 
 async function getToys(req, res) {
-    console.log('req.params at 29', req.params)
     try {
         var byName = req.params.filterBy ? req.params.filterBy.match(/byName=([^&]*)/) : ''
         var byType = req.params.filterBy ? req.params.filterBy.match(/byType=([^&]*)/) : ''

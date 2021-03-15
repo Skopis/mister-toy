@@ -56,14 +56,15 @@ import {reviewService} from '../services/review.service.js'
                 this.review.byUserId = this.loggedinUser._id
                 this.review.aboutToyId = this.toy._id
                 try{
-                    await this.$store.dispatch({type: 'addReview', review: this.review})
+                    const review = await this.$store.dispatch({type: 'addReview', review: this.review})
+                    console.log('review at 60', review)
+                    this.$emit('addReview', review)
                     this.review = reviewService.getEmptyReview()
                     showMsg('Review Saved')
                 }
                 catch(err){
                     showMsg('cant save review')
                 }
-                
             }
         },
         computed: {

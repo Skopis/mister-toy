@@ -11,7 +11,7 @@
                 <span>{{ errors[0] }}</span>
             </validation-provider><br />
                 <div v-if="user.isAdmin">
-                    <input type="checkbox" v-model="toyToEdit.inStock" />In inStock
+                    <input type="checkbox" v-model="toyToEdit.inStock" />In Stock
                 </div>
                 <input type="checkbox" v-model="toyToEdit.type" value="funny" /> Funny
                 <input type="checkbox" v-model="toyToEdit.type" value="scary" /> Scary

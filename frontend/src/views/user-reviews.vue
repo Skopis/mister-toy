@@ -28,6 +28,7 @@
         },
         created() {
             const userId = this.$store.getters.user._id
+            console.log(this.$store.getters.user, 'this.$store.getters.user')
             this.setReviews(userId)
         },
         methods: {
@@ -35,9 +36,9 @@
                 return '⭐'.repeat(num)
             },
             async setReviews(userId) {
-                this.reviews = await reviewService.query({
-                    userId
-                })
+                this.reviews = await reviewService.query({ userId })
+                console.log('userId', userId)
+                console.log('this.reviews', this.reviews)
             },
             async removeReview(reviewId) {
                 const userId = this.$store.getters.user._id

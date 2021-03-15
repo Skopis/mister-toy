@@ -3,10 +3,15 @@ const toyService = require('../toy/toy.service')
 const reviewService = require('./review.service')
 
 async function getReviews(req, res) {
-    console.log('req.params', req.params)
     try {
-        const reviews = await reviewService.query(req.query)
-        console.log('reviews', reviews)
+        var userId = req.params.filterBy ? req.params.filterBy.match(/userId=([^&]*)/) : ''
+        var toyId = req.params.filterBy ? req.params.filterBy.match(/toyId=([^&]*)/) : ''
+        var filterBy = {
+            userId: userId[1],
+            toyId: toyId[1],
+        }
+        console.log('filterBy at review controller', filterBy)
+        const reviews = await reviewService.query(filterBy)
         res.send(reviews)
     } catch (err) {
         logger.error('Cannot get reviews', err)
@@ -26,19 +31,15 @@ async function deleteReview(req, res) {
 
 
 async function addReview(req, res) {
-    console.log('hi')
-    console.log('review at back', req.body)
     try {
         var review = req.body
         review = await reviewService.add(review)
         review.byUser = req.session.user
         review.toy = await toyService.getById(review.aboutToyId)
         res.send(review)
-        console.log('review at 35 controller', review)
 
     } catch (err) {
         logger.error('Failed to add review', err)
-        console.log('err', err)
         res.status(500).send({ err: 'Failed to add review' })
         throw err
     }

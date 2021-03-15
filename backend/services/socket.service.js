@@ -5,6 +5,7 @@ const logger = require('./logger.service');
 
 var gIo = null
 var gSocketBySessionIdMap = {}
+var topicMsgsMap= {}
 
 function connectSockets(http, session) {
     gIo = require('socket.io')(http);
@@ -15,7 +16,6 @@ function connectSockets(http, session) {
         autoSave: true
     }));
     gIo.on('connection', socket => {
-        // console.log('socket.handshake', socket.handshake)
         gSocketBySessionIdMap[socket.handshake.sessionID] = socket
         // TODO: emitToUser feature - need to tested for CaJan21
         // if (socket.handshake?.session?.user) socket.join(socket.handshake.session.user._id)
@@ -33,14 +33,22 @@ function connectSockets(http, session) {
             socket.join(topic)
             // logger.debug('Session ID is', socket.handshake.sessionID)
             socket.myTopic = topic
+            socket.emit('topic welcome', {txt: `welcome to ${topic} room`, msgs: topicMsgsMap[topic]})
         })
         socket.on('chat newMsg', msg => {
+            if(!topicMsgsMap[socket.myTopic] || !topicMsgsMap[socket.myTopic].length) topicMsgsMap[socket.myTopic] = []
+            topicMsgsMap[socket.myTopic].push(msg)
             // emits to all sockets:
             // gIo.emit('chat addMsg', msg)
             // emits only to sockets in the same room
-            gIo.to(socket.myTopic).emit('chat addMsg', msg)
+            gIo.to(socket.myTopic).emit('chat addMsg', topicMsgsMap[socket.myTopic])
         })
-
+        socket.on('review-added', review => {
+            // emits to all sockets:
+            // gIo.emit('chat addMsg', msg)
+            // emits only to sockets in the same room
+            socket.broadcast.emit('review-added', review)
+        })
     })
 }
 

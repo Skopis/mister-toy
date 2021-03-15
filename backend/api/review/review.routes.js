@@ -7,7 +7,7 @@ const router = express.Router()
 // middleware that is specific to this router
 // router.use(requireAuth)
 
-router.get('/:toyId', log, getReviews)
+router.get('/:filterBy', log, getReviews)
 router.post('/', addReview)
 router.delete('/:id',  requireAuth, deleteReview)
 

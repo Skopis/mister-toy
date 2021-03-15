@@ -31,7 +31,6 @@ const toyRoutes = require('./api/toy/toy.routes')
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const reviewRoutes = require('./api/review/review.routes')
-
 const {connectSockets} = require('./services/socket.service')
 
 // routes

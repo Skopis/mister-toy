@@ -57,7 +57,6 @@ async function remove(toyId) {
 
 async function update(toy) {
     try {
-        console.log('toy at 60', toy)
         var toyToSave = {
             _id: ObjectId(toy._id),
             name: toy.name,
@@ -67,7 +66,6 @@ async function update(toy) {
             inStock: toy.inStock,
             reviews: toy.reviews
         }
-        console.log('toyToSave at 70', toyToSave)
         const collection = await dbService.getCollection('toy')
         await collection.updateOne({ '_id': toyToSave._id }, { $set: toyToSave })
         return toyToSave;
@@ -98,7 +96,6 @@ async function add(toy) {
 
 function _buildSort(filterBy) {
     var sort = {}
-    console.log('filterBy.sort', filterBy.sort)
     if (filterBy.sort === 'name') sort = { name: 1 }
     if (filterBy.sort === 'price') sort = { price: 1 }
     if (filterBy.sort === 'in-stock') sort = { inStock: 1 }
@@ -117,46 +114,6 @@ function _buildCriteria(filterBy) {
     }
     return criteria
 }
-
-// function query(filterBy) {
-//     console.log('filterBy.sort', filterBy.sort)
-//     var toysToShow = []
-//     if ((!filterBy.sort || filterBy.sort === 'all') && !filterBy.byName && (!filterBy.byType || filterBy.byType === 'all')) return Promise.resolve(gToys)
-//     if (filterBy.byName) {
-//         toysToShow = gToys.filter(toy => {
-//             return toy.name.toLowerCase().includes(filterBy.byName.toLowerCase())
-//         })
-//     }
-//     if (filterBy.byType) {
-//         gToys.forEach(toy => {
-//             for (let i = 0; i < toy.type.length; i++) {
-//                 if (toy.type[i] === filterBy.byType) toysToShow.push(toy)
-//             }
-//         })
-//     }
-//     if (filterBy.sort) {
-//         if (filterBy.sort === 'in-stock') {
-//             toysToShow = gToys.filter(toy => {
-//                 return toy.inStock
-//             })
-//         }
-//         else if (filterBy.sort === 'name') {
-//             console.log('hi sort')
-//             toysToShow = gToys.sort(function (a, b) {
-//                 if (a.name < b.name) { return -1; }
-//                 if (a.name > b.name) { return 1; }
-//                 return 0;
-//             })
-//         }
-//         else {//price
-//             toysToShow = gToys.sort(function (a, b) {
-//                 return a.price - b.price
-//             })
-//         }
-//     }
-
-//     return Promise.resolve(toysToShow)
-// }
 
 function _makeId(length = 5) {
     var txt = '';

@@ -1,4 +1,3 @@
-import { utilService } from "./util.service.js";
 import { httpService } from './http.service.js'
 
 const USER_URL = 'auth/'

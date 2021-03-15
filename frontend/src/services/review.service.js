@@ -1,31 +1,35 @@
 const REVIEW_URL = 'review/'
 import { httpService } from './http.service.js'
 
-export const reviewService= {
+export const reviewService = {
     save,
     query,
     getEmptyReview,
     remove
 }
-async function remove(reviewId){
-    return httpService.delete(REVIEW_URL+reviewId)
-                
+function remove(reviewId) {
+    return httpService.delete(REVIEW_URL + reviewId)
+
 }
-async function save(review){
+function save(review) {
     return httpService.post(REVIEW_URL, review)
 }
 
-async function query(filterBy){
-    try{
-        const reviews = await httpService.get(REVIEW_URL+filterBy.toyId)
+async function query(filterBy) {
+    const params = { toyId: filterBy.toyId || '', userId: filterBy.userId || ''}
+    const queryString = new URLSearchParams(params).toString();
+    try {
+        const reviews = await httpService.get(REVIEW_URL + queryString)
         return reviews
     }
-    catch(err){
+    catch (err) {
         throw err
     }
 }
 
-function getEmptyReview() { 
-return { starCount: null,
-txt: ''}
+function getEmptyReview() {
+    return {
+        starCount: null,
+        txt: ''
+    }
 }
