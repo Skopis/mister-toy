@@ -9,8 +9,8 @@
             <p>In Stock: {{isInStock}}</p>
             <p>Reviews:</p>
         <ul class="review-card">
-            <li v-for="(review,idx) in toy.reviews" :key="idx" :v-if="toy.reviews">
-                <p>By: {{review.user.fullname}}</p>
+            <li v-for="(review,idx) in reviews" :key="idx" :v-if="reviews">
+                <p>By: {{review.byUser.fullname}}</p>
                 <p>Rating: {{showStars(review.starCount)}}</p>
                 <p>"{{review.txt}}"</p>
                 <button v-if="isLoggedinUserAdmin" @click="remove(idx)">✖️</button>
@@ -24,12 +24,14 @@
 <script>
 import { toyService } from '../services/toy.service.js'
 import toyReview from '../cmps/toy-review.vue'
+import { reviewService } from '../services/review.service.js'
 const STAR = '⭐'
 export default {
     name: 'toy-details',
     data() {
         return {
-            toy: null
+            toy: null,
+            reviews: null
         }
     },
     computed:{
@@ -50,14 +52,18 @@ export default {
         remove(idx){
             this.toy.reviews.splice(idx, 1)
             toyService.save(this.toy)
+        },
+        async setReviews(toyId){
+            this.reviews = await reviewService.query({toyId})
         }
     },
     created() {
-        const idx = this.$route.params.toyId
-        toyService.getById(idx)
+        const id = this.$route.params.toyId
+        toyService.getById(id)
             .then(toy => {
                 this.toy = toy
             })
+        this.setReviews(id)
     },
     components:{
         toyReview

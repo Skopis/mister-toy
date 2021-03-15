@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import { toyService } from '../services/toy.service';
+import { showMsg } from '../services/eventBus.service.js';
+import {reviewService} from '../services/review.service.js'
 
     export default {
         name: 'toy-review',
@@ -51,15 +52,18 @@ import { toyService } from '../services/toy.service';
                     document.querySelector(`.star-${i}`).classList.add('selected')
                 }
             },
-            submitReview() {
-                this.review.user = this.loggedinUser
-                this.toy.reviews.push(this.review)
-                toyService.save(this.toy)
-                this.review = {
-                    txt: '',
-                    starCount: null,
-                    user: ''
+            async submitReview() {
+                this.review.byUserId = this.loggedinUser._id
+                this.review.aboutToyId = this.toy._id
+                try{
+                    await this.$store.dispatch({type: 'addReview', review: this.review})
+                    this.review = reviewService.getEmptyReview()
+                    showMsg('Review Saved')
                 }
+                catch(err){
+                    showMsg('cant save review')
+                }
+                
             }
         },
         computed: {

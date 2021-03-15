@@ -5,6 +5,7 @@ import map from '../views/map.vue'
 import toyApp from '../views/toy-app.vue'
 import toyDetails from '../views/toy-details.vue'
 import logPage from '../views/log-page.vue'
+import userReviews from '../views/user-reviews.vue'
 
 Vue.use(VueRouter)
 
@@ -15,8 +16,8 @@ const routes = [
     component: home
   },
   {
-    path: '/auth',
-    name: 'Auth',
+    path: '/login',
+    name: 'Login',
     component: logPage
   },
   {
@@ -32,6 +33,10 @@ const routes = [
   {
     path: '/toy/details/:toyId',
     component: toyDetails
+  },
+  {
+    path: '/reviews',
+    component: userReviews
   }
 ]
 

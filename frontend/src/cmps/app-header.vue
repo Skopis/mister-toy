@@ -6,7 +6,8 @@
             <router-link to="/">Home</router-link> |
             <router-link to="/toy">Toy Shop</router-link> |
             <router-link to="/map">Map</router-link> |
-            <router-link to="/auth">Log In</router-link>
+            <router-link to="/reviews" v-if="user.fullname != 'No loggedin User'">My Reviews</router-link> |
+            <router-link to="/login">Log In</router-link>
         </nav>
         </div>
         <section class="user-info">
@@ -30,7 +31,6 @@
             <p>Total: \${{cartTotal}} </p>
             <button @click="checkout">Checkout</button>
         </section>
-        
     </header>
 </template>
 

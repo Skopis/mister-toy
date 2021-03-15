@@ -1,5 +1,7 @@
 import { toyStore } from "./toy.store.js";
 import { userService } from "../services/user.service.js";
+import {reviewService} from '../services/review.service.js'
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -39,6 +41,9 @@ export default new Vuex.Store({
               commit({ type: 'setUser', user: null })
             })
     },
+    addReview(context, {review}){
+      reviewService.save(review)
+    }
   },
   modules: {
     toyStore

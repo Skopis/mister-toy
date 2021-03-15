@@ -1,10 +1,12 @@
 const logger = require('../../services/logger.service')
-const userService = require('../user/user.service')
+const toyService = require('../toy/toy.service')
 const reviewService = require('./review.service')
 
 async function getReviews(req, res) {
+    console.log('req.params', req.params)
     try {
         const reviews = await reviewService.query(req.query)
+        console.log('reviews', reviews)
         res.send(reviews)
     } catch (err) {
         logger.error('Cannot get reviews', err)
@@ -24,17 +26,21 @@ async function deleteReview(req, res) {
 
 
 async function addReview(req, res) {
+    console.log('hi')
+    console.log('review at back', req.body)
     try {
         var review = req.body
-        review.byUserId = req.session.user._id
         review = await reviewService.add(review)
         review.byUser = req.session.user
-        review.aboutUser = await userService.getById(review.aboutUserId)
+        review.toy = await toyService.getById(review.aboutToyId)
         res.send(review)
+        console.log('review at 35 controller', review)
 
     } catch (err) {
         logger.error('Failed to add review', err)
+        console.log('err', err)
         res.status(500).send({ err: 'Failed to add review' })
+        throw err
     }
 }
 
